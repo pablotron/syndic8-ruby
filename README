@@ -1,0 +1,44 @@
+Syndic8-Ruby 0.1.0 README
+=========================
+
+This document was last updated on Sun Mar 21 09:00:08 2004.
+Please see the file COPYING for licensing and warranty information.  The
+latest version of this software is available at the following URL:
+http://www.pablotron.org/software/syndic8-ruby/
+
+Description
+===========
+Ruby interface for Syndic8.com
+
+
+System Requirements
+===================
+* Ruby (version 1.6.8 or newer)
+* xmlrpc4r (included with Ruby 1.8.x)
+
+
+Using Syndic8-Ruby
+==================
+Using Syndic8-Ruby is simple; here's some sample code:
+
+  # include library
+  require 'syndic8'
+
+  # simple query
+  s = Syndic8.new
+  ary = s.find('cooking')
+  ary.each { |feed| p feed }
+
+  # set number of results and fields returned
+  # (both can affect size and duration of query)
+  s.max_results = 10
+  s.keys -= 'description'
+
+  ary = s.find('linux')
+  ary.each { |feed| p feed }
+
+
+About the Author
+================
+Paul Duncan <pabs@pablotron.org>
+http://www.pablotron.org/
