@@ -1,0 +1,4 @@
+Syndic8-Ruby TODO
+=================
+[ ] create a Syndic8::SubscriptionList object?
+[ ] better error-code handling
