@@ -21,3 +21,12 @@
 
 * Tue Sep 28 01:41:40 2004, pabs <pabs@pablotron.org>
   * README: updated versoin, corrected some typos.
+
+* Tue Sep 28 14:41:57 2004, pabs <pabs@pablotron.org>
+  * syndic8.gemspec: updated version
+  * syndic8.gemspec: added TODO to list of rdoc files
+  * syndic8.rb: updated header description
+  * syndic8.rb: added documentation to Syndic8 and Syndic8::Error
+	  classes
+  * syndic8.rb: misc documentaiton cleanups
+

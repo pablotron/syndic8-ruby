@@ -5,7 +5,7 @@ spec = Gem::Specification.new do |s|
   #### Basic information.
 
   s.name = 'Syndic8-Ruby'
-  s.version = '0.1.0'
+  s.version = '0.2.0'
   s.summary = <<-EOF
     Syndic8 (http://www.syndic8.com/) bindings for Ruby.
   EOF
@@ -31,7 +31,7 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options = ['--webcvs',
   'http://cvs.pablotron.org/cgi-bin/viewcvs.cgi/syndic8-ruby/', '--title',
   'Syndic8-Ruby API Documentation', 'syndic8.rb', 'README', 'ChangeLog',
-  'COPYING']
+  'COPYING', 'TODO']
 
   #### Author and project details.
 

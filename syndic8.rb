@@ -1,7 +1,6 @@
 #######################################################################
-# syndic8.rb - Ruby interface for Syndic8.com.                        #
+# syndic8.rb - Ruby interface for Syndic8 (http://syndic8.com/).      #
 # by Paul Duncan <pabs@pablotron.org>                                 #
-#                                                                     #
 #                                                                     #
 # Copyright (C) 2004 Paul Duncan                                      #
 #                                                                     #
@@ -26,39 +25,63 @@
 # CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF          #
 # CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION  #
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.     #
-#                                                                     #
-#                                                                     #
-# Usage:                                                              #
-#   require 'syndic8'                                                 #
-#                                                                     #
-#   # simple query                                                    #
-#   s = Syndic8.new                                                   #
-#   ary = s.find('cooking')                                           #
-#   ary.each { |feed| p feed }                                        #
-#                                                                     #
-#   # set number of results and fields returned                       #
-#   # (both can affect size and duration of query)                    #
-#   s.max_results = 10                                                #
-#   s.keys -= ['description']                                         #
-#                                                                     #
-#   ary = s.find('linux')                                             #
-#   ary.each { |feed| p feed }                                        #
-#                                                                     #
 #######################################################################
 
 require 'xmlrpc/client'
 require 'md5'
 
+#
+# Syndic8 - Ruby bindings for the Syndic8 (http://syndic8.com/) XML-RPC
+# interface.
+#
+# Basic Usage:
+#   require 'syndic8'
+#
+#   # simple query
+#   s = Syndic8.new
+#   feeds = s.find('cooking')
+#   feeds.each { |feed| p feed }
+#
+#   # set number of results and fields returned
+#   # (both can affect size and duration of query)
+#   s.max_results = 10
+#   s.keys -= ['description']
+#
+#   feeds = s.find('linux')
+#   feeds.each { |feed| p feed }
+#
+# Managing a Subscription List:
+#   require 'syndic8'
+#   
+#   # log in to syndic8 with user "joebob" and password "p455w3rd"
+#   s = Syndic8.new('joebob', 'p455w3rd')
+#
+#   # create a new private list 
+#   list_id = s.create_subscription_list("Joebob's Links")
+#   
+#   # subscribe to pablotron.org on your subscription list
+#   s.subscribe_feed(list_id, 'http://pablotron.org/rss/', false)
+#
+#   # subscribe to NIF Health category on list
+#   s.subscribe_category(list_id, 'NIF', 'Health')
+#
+# Using the Weblog Ping Service:
+#   s = Syndic8.new
+#   s.ping('Pablotron', 'http://pablotron.org/')
+#
 class Syndic8
   attr_accessor :keys, :max_results
 
+  VERSION = '0.2.0'
+
+  #
+  # Syndic8::Error - Simple wrapper for errors.
+  #
   class Error < Exception
     def initialize(*args)
       super(*args)
     end
   end
-
-  VERSION = '0.2.0'
 
   # 
   # Create a new Syndic8 object.
@@ -91,6 +114,10 @@ class Syndic8
     end
   end
 
+  #
+  # Call an XML-RPC Syndic8 method and return the results, wrapping
+  # any exceptions in a Syndic8::Error exception.
+  #
   def call(meth, *args)
     begin
       meth_str = (meth =~ /\./) ? meth : 'syndic8.' << meth
@@ -615,7 +642,7 @@ class Syndic8
 
   #
   # Returns the list of subscription lists for the given user. Each
-  # structure includes the list id, name, and status (public or
+  # hash includes the list id, name, and status (public or
   # private).
   #
   # Note: You must be logged in and using the PersonalList option in
@@ -663,7 +690,7 @@ class Syndic8
   #   list_id = s.create_subscription_list('Gadgets', true)
   #   s.subscribe_category(list_id, 'NIF', 'PDA')
   #
-  def subscribe_category(list_id, cat_scheme)
+  def subscribe_category(list_id, cat_scheme, cat)
     call('SubscribeCategory', @user, @pass, cat_scheme, cat, list_id)
   end
 
@@ -681,7 +708,7 @@ class Syndic8
   # Example:
   #   # subscribe to pablotron.org on the public list, and suggest it if
   #   # Syndic8 doesn't already know about it
-  #   s.subscribe_feed('http://pablotron.org/rss/', 0, true)
+  #   s.subscribe_feed(0, 'http://pablotron.org/rss/', true)
   #
   def subscribe_feed(list_id, feed_id, auto_suggest)
     call('SubscribeFeed', @user, @pass, feed_id, list_id, auto_suggest)
@@ -730,6 +757,8 @@ if __FILE__ == $0
 
   search_str = ARGV.join(' ') || 'cooking'
 
+  # This test code is slightly dated, but still works correctly.  at
+  # some point I should make it a bit more comprehensive :D
   begin
     s = Syndic8.new
     s.keys -= ['description', 'siteurl']
@@ -738,7 +767,7 @@ if __FILE__ == $0
     feeds.each do |feed|
       puts '"' + s.keys.map { |key| feed[key].escape }.join('","') + '"'
     end
-  rescue XMLRPC::FaultException => e
-    puts 'Error:' +  e.faultCode + e.faultString
+  rescue Syndic8::Error => e
+    puts 'Error:' +  e.to_s
   end
 end
