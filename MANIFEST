@@ -3,3 +3,5 @@
 ./README
 ./ChangeLog
 ./MANIFEST
+./TODO
+./syndic8.gemspec
