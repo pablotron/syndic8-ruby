@@ -10,7 +10,7 @@ spec = Gem::Specification.new do |s|
     Syndic8 (http://www.syndic8.com/) bindings for Ruby.
   EOF
   s.description = <<-EOF
-    Delicious (http://www.syndic8.com/) bindings for Ruby.
+    Syndic8 (http://www.syndic8.com/) bindings for Ruby.
   EOF
 
   s.requirements << 'Ruby, version 1.8.0 (or newer)'

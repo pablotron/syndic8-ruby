@@ -35,3 +35,6 @@
 
 * Tue Sep 28 14:46:47 2004, pabs <pabs@pablotron.org>
   * releasing 0.2.0
+
+* Mon Oct 04 04:59:16 2004, pabs <pabs@pablotron.org>
+  * syndic8.gemspec: fix description
