@@ -39,7 +39,7 @@
 #   # set number of results and fields returned                       #
 #   # (both can affect size and duration of query)                    #
 #   s.max_results = 10                                                #
-#   s.keys -= 'description'                                           #
+#   s.keys -= ['description']                                         #
 #                                                                     #
 #   ary = s.find('linux')                                             #
 #   ary.each { |feed| p feed }                                        #
@@ -97,6 +97,8 @@ if __FILE__ == $0
 
   begin
     s = Syndic8.new
+    s.keys -= ['description', 'siteurl']
+
     feeds = s.find(search_str)
     feeds.each do |feed|
       puts '"' + s.keys.map { |key| feed[key].escape }.join('","') + '"'
