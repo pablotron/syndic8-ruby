@@ -1,21 +1,20 @@
-Syndic8-Ruby 0.1.0 README
+Syndic8-Ruby 0.2.0 README
 =========================
 
-This document was last updated on Sun Mar 21 09:00:08 2004.
+This document was last updated on Tue Sep 28 01:40:29 2004.
 Please see the file COPYING for licensing and warranty information.  The
 latest version of this software is available at the following URL:
 http://www.pablotron.org/software/syndic8-ruby/
 
 Description
 ===========
-Ruby interface for Syndic8.com
-
+Ruby bindings for Syndic8 (http://syndic8.com/) XML-RPC interface.
 
 System Requirements
 ===================
-* Ruby (version 1.6.8 or newer)
+* Ruby (version 1.8.x or newer)
 * xmlrpc4r (included with Ruby 1.8.x)
-
+* MD5 (included with Ruby 1.8.x)
 
 Using Syndic8-Ruby
 ==================
@@ -36,7 +35,6 @@ Using Syndic8-Ruby is simple; here's some sample code:
 
   ary = s.find('linux')
   ary.each { |feed| p feed }
-
 
 About the Author
 ================
